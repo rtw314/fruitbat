@@ -1,0 +1,23 @@
+Fruitbat
+--------
+
+JSON Format
+===========
+
+Each form is described by an array zero or more form elements. Each element is a JSON object with elements that describe the form, which, at minimum, must have a "type" element that describes the type of element to be rendered.
+
+### type: heading
+
+Renders an `<h2>` element containing the text given in the JSON object's "text" element. Headings must have a "text" element. Other elements are ignored.
+
+### type: text
+
+Renders and HTML `<input>` element of type "text". The JSON element must contain a "name" element which specifies the key for this data in the corresponding POST request. It must aalso contain a "validator" element which specifies which validation to be performed on this text. See below for possible values. The JSON element may also contain a "lable" element, which specifies the text of a matching `<label>` for this `<input>`.
+
+### type: submit
+
+Renders a `<input>` of type submit which contains the text contained in the manditory "text" element. 
+
+### Validators
+
+- "phone": expects digits, '(', ')', and '-' are ignored. Must have 7, 9, or ?? digits.
