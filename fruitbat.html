@@ -171,7 +171,37 @@ $(function() {
 		$("#wrapper").toggleClass("toggled");
 	});
 
-	form = {header: function(){ return $("<h2>Header</h2>"); },
+	form = {
+		header: function(){
+			//Create header and input for editing
+			var hdr = $("<h2>Header</h2>");
+			var inp = $("<input type='text' value='Header'>");
+
+			// Show input when title is clicked
+			hdr.click(function(e){
+				hdr.hide();
+				inp.show();
+				inp.select();
+			});
+
+			// Prevent enter from submitting form when typing in input
+			inp.bind("keypress", function(e){
+				if(e.keyCode == 13){
+					inp.blur();
+					return false;
+				}
+			});
+
+			// Restore title when cursor leaves input
+			inp.blur(function(e){
+				hdr.text(inp.val());
+				inp.hide();
+				hdr.show();
+			});
+
+			inp.hide();
+			return $("<div>").append(hdr).append(inp);
+		},
 		text: function(){ return $("<div class='form-group'><label for=''>Label</label><input type='text' class='form-control' id='' placeholder='placeholder'>"); },
 		textarea: function(){ return $("<div class='form-group'><label for=''>Label</label><textarea class='form-control' id=''>placeholder</textarea>"); },
 		checkbox: function(){ return $("<div class='checkbox'><label><input type='checkbox' value='placeholder'>placeholder</label>"); },
