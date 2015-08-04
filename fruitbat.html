@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+		<title>Fruitbat Form Editor</title>
+
+		<!-- Latest compiled and minified CSS -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+
+		<!-- Optional theme -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+
+
+		<style>
+body, html, #wrapper, #page-content-wrapper{
+	height: 100%;
+}
+
+#wrapper {
+	padding-left: 0;
+	-webkit-transition: all 0.5s ease;
+	-moz-transition: all 0.5s ease;
+	-o-transition: all 0.5s ease;
+	transition: all 0.5s ease;
+}
+
+#wrapper.toggled {
+	padding-left: 200px;
+}
+
+#sidebar-wrapper {
+	z-index: 1000;
+	position: fixed;
+	left: 200px;
+	width: 0;
+	height: 100%;
+	margin-left: -200px;
+	/*overflow-y: auto;*/
+	background: #000;
+	-webkit-transition: all 0.5s ease;
+	-moz-transition: all 0.5s ease;
+	-o-transition: all 0.5s ease;
+	transition: all 0.5s ease;
+}
+
+#wrapper.toggled #sidebar-wrapper {
+	width: 200px;
+}
+
+#page-content-wrapper {
+	width: 100%;
+	position: absolute;
+	padding: 15px;
+}
+
+#wrapper.toggled #page-content-wrapper {
+	position: absolute;
+	margin-right: -200px;
+}
+
+/* Sidebar Styles */
+
+.sidebar-nav {
+	position: absolute;
+	top: 0;
+	width: 200px;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.sidebar-nav li {
+	text-indent: 20px;
+	line-height: 40px;
+	display: block;
+	text-decoration: none;
+	color: #ccc;
+	margin: 5px;
+	font-weight: normal;
+	font-size: 1.2em;
+}
+
+.placeholder {
+	background: lightyellow;
+	line-height: 4em;
+}
+
+.sidebar-nav > .sidebar-brand {
+	height: 65px;
+	font-size: 18px;
+	line-height: 60px;
+}
+
+		    #wrapper {
+			    padding-left: 200px;
+		    }
+
+		    #wrapper.toggled {
+			    padding-left: 0;
+		    }
+
+		    #sidebar-wrapper {
+			    width: 200px;
+		    }
+
+		    #wrapper.toggled #sidebar-wrapper {
+			    width: 0;
+		    }
+
+		    #page-content-wrapper {
+			    padding: 20px;
+			    position: relative;
+		    }
+
+		    #wrapper.toggled #page-content-wrapper {
+			    position: relative;
+			    margin-right: 0;
+		    }
+		</style>
+
+
+		<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+		<!--[if lt IE 9]>
+	  <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+	  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+	  <![endif]-->
+	</head>
+	<body>
+		<div id="wrapper">
+
+			<!-- Sidebar -->
+			<div id="sidebar-wrapper">
+				<ul id="palette" class="sidebar-nav connected-sortable">
+					<li class="sidebar-brand ui-state-disabled">Fruitbat</li>
+					<li class="ui-state-default badge" type="header">Header</li>
+					<li class="ui-state-default badge" type="text">Text</li>
+					<li class="ui-state-default badge" type="textarea">Text Area</li>
+					<li class="ui-state-default badge" type="checkbox">Check Box</li>
+					<li class="ui-state-default badge" type="radio">Radio Button</li>
+					<li class="ui-state-default badge" type="signature">Signature</li>
+					<li class="ui-state-default badge" type="submit">Submit Button</li>
+				</ul>
+			</div>
+			<!-- /#sidebar-wrapper -->
+
+			<!-- Page Content -->
+			<div id="page-content-wrapper">
+				<form id="form" class="connected-sortable" style="min-height:100%">
+				</form>
+			</div>
+			<!-- /#page-content-wrapper -->
+
+		</div>
+		<!-- /#wrapper -->
+
+		<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+		<!-- Include all compiled plugins (below), or include individual files as needed -->
+		<!-- Latest compiled and minified JavaScript -->
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+		<script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+		<script>
+$(function() {
+	// Not currently used
+	$("#menu-toggle").click(function(e) {
+		e.preventDefault();
+		$("#wrapper").toggleClass("toggled");
+	});
+
+	form = {
+		header: function(){
+			//Create header and input for editing
+			var hdr = $("<h2>Header</h2>");
+			var inp = $("<input type='text' value='Header'>");
+
+			// Show input when title is clicked
+			hdr.click(function(e){
+				hdr.hide();
+				inp.show();
+				inp.select();
+			});
+
+			// Prevent enter from submitting form when typing in input
+			inp.bind("keypress", function(e){
+				if(e.keyCode == 13){
+					inp.blur();
+					return false;
+				}
+			});
+
+			// Restore title when cursor leaves input
+			inp.blur(function(e){
+				hdr.text(inp.val());
+				inp.hide();
+				hdr.show();
+			});
+
+			inp.hide();
+			return $("<div>").append(hdr).append(inp);
+		},
+		text: function(){ return $("<div class='form-group'><label for=''>Label</label><input type='text' class='form-control' id='' placeholder='placeholder'>"); },
+		textarea: function(){ return $("<div class='form-group'><label for=''>Label</label><textarea class='form-control' id=''>placeholder</textarea>"); },
+		checkbox: function(){ return $("<div class='checkbox'><label><input type='checkbox' value='placeholder'>placeholder</label>"); },
+		radio: function(){ return $("<div class='radio'><label><input type='radio' value='placeholder' name='radio1'>placeholder</label>"); },
+		submit: function(){ return $("<button type='submit' disabled class='btn btn-default'>Submit</button>");},
+	}
+
+	function addForm(type){
+		f = form[type];
+		if(!f) f = function(type){return $("<p class='alert alert-warning'>"+type+" not yet supported</p>");}
+		return f(type).attr("type",type);
+	}
+
+	// Set up form and palette drag and drop
+	$("#palette").sortable({
+		connectWith: ".connected-sortable",
+		items: "li:not(.ui-state-disabled)",
+		placeholder: "placeholder",
+		remove: function(e,li) {
+			//Create the new form element
+			addForm(li.item.attr("type")).insertAfter(li.item);
+
+			//Make sure the palette item stays in the list
+			$(this).sortable('cancel');
+		}
+	}).disableSelection();
+
+	$("#form").sortable({
+		connectWith: ".connected-sortable",
+		placeholder: "placeholder",
+	}).disableSelection();
+});
+		</script>
+	</body>
+</html>
