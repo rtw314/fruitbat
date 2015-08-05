@@ -1,3 +1,19 @@
 <?php
-$json_form = '[{"type": "label", "text": "Type your name here:"}{"type": "textbox", "id": "text_1"}{"type": "submit", "text": "Submit"}]';
+$formString = '[
+	{
+		"type":"heading",
+		"text":"This is a Heading"
+	},
+	{
+		"type":"text",
+		"name":"text1",
+		"label":"Phone Number",
+		"validator":"phone"
+	},
+	{
+		"type":"submit",
+		"text":"Send It"
+	}
+]';
+$json_form = json_decode($formString, true);
 ?>
