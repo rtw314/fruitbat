@@ -1,8 +1,4 @@
 <?php
-/*public static function CreateElement($key, $value)
-{
-
-}*/
 
 /*********************************************************
  * Contains an array of functions that are associated to
@@ -35,6 +31,14 @@ $handlers = array(
 		$element .= '<h2';
 		//TODO: add handlers for attributes for the element
 		$element .= '>' . $object["text"] . '</h2><br>';
+		return $element;
+	},
+	"button"=>function ($object)
+	{
+		$element = "";
+		$element .= '<button type="button"';
+		//TODO: add handlers for attributes
+		$element .= '>' . $object["text"] . '</button>';
 		return $element;
 	},
 	"default"=>function ($object)
