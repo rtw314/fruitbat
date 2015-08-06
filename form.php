@@ -17,6 +17,10 @@ $formString = '[
 		"validator":"none"
 	},
 	{
+		"type":"button",
+		"text":"Click me!"
+	},
+	{
 		"type":"submit",
 		"text":"Send It"
 	}
