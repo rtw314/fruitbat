@@ -4,29 +4,45 @@
 
 }*/
 
+/*********************************************************
+ * Contains an array of functions that are associated to
+ * the respective types of HTML elements that the form is
+ * to generate. For example, if the type is "text" the
+ * handler will use the function associated with "text"
+ * to create a respective textbox element. Each function
+ * returns a string containing the created element.
+ ********************************************************/
 $handlers = array(
 
 	// Input types
 	"text"=>function ($object) 
 	{
-		echo $object["label"] . ':<br><input type="text" name="' .			$object["name"] . '" validator="' . $object["validator"] . '">';
+		$element = "";
+		$element .= $object["label"] . ':<br><input type="text" name="' . $object["name"] . '" validator="' . $object["validator"] . '">';
+		return $element;
 	},
 	"submit"=>function ($object)
 	{
-		echo '<input type="submit" value="' . $object["text"] . '">';
+		$element = "";
+		$element .= '<input type="submit" value="' . $object["text"] . '">';
+		return $element;
 	},
 
 	// Other types
 	"heading"=>function ($object) 
 	{
-		echo '<h2>' . $object["text"] . '</h2><br>';
+		$element = "";
+		$element .= '<h2';
+		//TODO: add handlers for attributes for the element
+		$element .= '>' . $object["text"] . '</h2><br>';
+		return $element;
 	},
 	"default"=>function ($object)
 	{
-		echo '<p style="color: #f00;">This element (' . $type . ') is not supported</p>';
+		$element = "";
+		$element .= '<p style="color: #f00;">This element (' . $type . ') is not supported</p>';
+		return $element;
 	}
 );
 
-//echo '<input type=' 
 ?>
-

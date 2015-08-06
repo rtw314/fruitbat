@@ -14,11 +14,11 @@ for ($i=0; $i < count($json_form); $i++) {
 	
 	// Handles the construction of the web page according to the objects given in the array
 	
-	$handlers[in_array($type, $handlers) ? $type : "default"]($object);
+	echo $handlers[array_key_exists($type, $handlers) ? $type : "default"]($object);
 }?>
 </form>
 
-<pre><?php echo var_dump($json_form); ?></pre>
+<!--<pre><?php echo var_dump($json_form); ?></pre>-->
 
 </body>
 </html>

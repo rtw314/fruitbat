@@ -11,6 +11,12 @@ $formString = '[
 		"validator":"phone"
 	},
 	{
+		"type":"text",
+		"name":"text2",
+		"label":"Name",
+		"validator":"none"
+	},
+	{
 		"type":"submit",
 		"text":"Send It"
 	}
